@@ -1,0 +1,154 @@
+<svg width="900" height="190" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow2" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="blip-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="radarBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00FF41" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#00FF41" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      @keyframes blink {
+        0%,49%{ opacity:1; } 50%,100%{ opacity:0; }
+      }
+      @keyframes pulseBlip {
+        0%,100%{ opacity:0.9; r:2.5; }
+        50%{ opacity:0.4; r:1.5; }
+      }
+      @keyframes fadeBlip {
+        0%{ opacity:0.8; } 100%{ opacity:0.15; }
+      }
+      @keyframes scanH {
+        0%   { transform: translateY(-2px); opacity:0; }
+        5%   { opacity:0.06; }
+        95%  { opacity:0.06; }
+        100% { transform: translateY(190px); opacity:0; }
+      }
+      .sweep { animation: rotate 4s linear infinite; transform-origin: 450px 95px; }
+      .cursor { animation: blink 1s step-end infinite; }
+      .blip1 { animation: pulseBlip 2s ease-in-out infinite; }
+      .blip2 { animation: pulseBlip 2s ease-in-out 0.7s infinite; }
+      .blip3 { animation: pulseBlip 2s ease-in-out 1.4s infinite; }
+      .scan  { animation: scanH 5s linear infinite; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="190" fill="#060b10"/>
+
+  <!-- Subtle background grid dots -->
+  <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="15" cy="15" r="0.6" fill="#00FF41" opacity="0.08"/>
+  </pattern>
+  <rect width="900" height="190" fill="url(#grid)"/>
+
+  <!-- Scanline -->
+  <rect class="scan" width="900" height="2" x="0" y="0" fill="#00FF41" opacity="1"/>
+
+  <!-- ═══ TOP + BOTTOM BORDER ═══ -->
+  <rect x="0" y="0" width="900" height="2" fill="#00FF41" opacity="0.55"/>
+  <rect x="0" y="188" width="900" height="2" fill="#00FF41" opacity="0.55"/>
+
+  <!-- ═══ CORNER BRACKETS ═══ -->
+  <!-- TL -->
+  <polyline points="14,34 14,10 38,10" fill="none" stroke="#00FF41" stroke-width="1.8" opacity="0.7"/>
+  <!-- TR -->
+  <polyline points="886,34 886,10 862,10" fill="none" stroke="#00FF41" stroke-width="1.8" opacity="0.7"/>
+  <!-- BL -->
+  <polyline points="14,156 14,180 38,180" fill="none" stroke="#00FF41" stroke-width="1.8" opacity="0.7"/>
+  <!-- BR -->
+  <polyline points="886,156 886,180 862,180" fill="none" stroke="#00FF41" stroke-width="1.8" opacity="0.7"/>
+
+  <!-- ═══ RADAR (centered at 450, 95) ═══ -->
+  <!-- Radar fill bg -->
+  <circle cx="450" cy="95" r="82" fill="url(#radarBg)"/>
+
+  <!-- Rings -->
+  <circle cx="450" cy="95" r="82" fill="none" stroke="#00FF41" stroke-width="0.6" opacity="0.2"/>
+  <circle cx="450" cy="95" r="60" fill="none" stroke="#00FF41" stroke-width="0.6" opacity="0.25"/>
+  <circle cx="450" cy="95" r="38" fill="none" stroke="#00FF41" stroke-width="0.6" opacity="0.3"/>
+  <circle cx="450" cy="95" r="16" fill="none" stroke="#00FF41" stroke-width="0.8" opacity="0.4"/>
+  <circle cx="450" cy="95" r="2"  fill="#00FF41" opacity="0.7"/>
+
+  <!-- Crosshairs -->
+  <line x1="450" y1="10"  x2="450" y2="180" stroke="#00FF41" stroke-width="0.5" opacity="0.18"/>
+  <line x1="365" y1="95"  x2="535" y2="95"  stroke="#00FF41" stroke-width="0.5" opacity="0.18"/>
+  <!-- Diagonal subtle -->
+  <line x1="392" y1="37" x2="508" y2="153" stroke="#00FF41" stroke-width="0.3" opacity="0.1"/>
+  <line x1="508" y1="37" x2="392" y2="153" stroke="#00FF41" stroke-width="0.3" opacity="0.1"/>
+
+  <!-- Rotating sweep -->
+  <g class="sweep">
+    <!-- Trailing fade wedge -->
+    <path d="M 450 95 L 450 13 A 82 82 0 0 1 532 95 Z"
+          fill="#00FF41" opacity="0.06"/>
+    <!-- Leading edge line -->
+    <line x1="450" y1="95" x2="450" y2="13"
+          stroke="#00FF41" stroke-width="1.8" opacity="0.75" filter="url(#glow2)"/>
+  </g>
+
+  <!-- BLIPS -->
+  <circle class="blip1" cx="472" cy="52" r="2.5" fill="#00FF41" filter="url(#blip-glow)"/>
+  <circle class="blip2" cx="415" cy="72" r="2"   fill="#00FF41" filter="url(#blip-glow)"/>
+  <circle class="blip3" cx="488" cy="118" r="2.2" fill="#00FF41" filter="url(#blip-glow)"/>
+
+  <!-- ═══ LEFT HUD ═══ -->
+  <!-- Section label -->
+  <text x="55" y="40" font-family="'Courier New',monospace" font-size="9" fill="#00FF41" opacity="0.5" letter-spacing="2">■ SYSTEM STATUS</text>
+  <line x1="55" y1="44" x2="310" y2="44" stroke="#00FF41" stroke-width="0.5" opacity="0.2"/>
+
+  <text x="55" y="65" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[MODE]</text>
+  <text x="140" y="65" font-family="'Courier New',monospace" font-size="12" fill="#00FF41" opacity="0.9" filter="url(#glow2)">OFFENSIVE</text>
+
+  <text x="55" y="85" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[ROLE]</text>
+  <text x="140" y="85" font-family="'Courier New',monospace" font-size="12" fill="#5599ff" opacity="0.9">PENTEST</text>
+
+  <text x="55" y="105" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[FOCUS]</text>
+  <text x="140" y="105" font-family="'Courier New',monospace" font-size="12" fill="#5599ff" opacity="0.9">WEB APP SEC</text>
+
+  <text x="55" y="125" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[HUNT]</text>
+  <text x="140" y="125" font-family="'Courier New',monospace" font-size="12" fill="#00FF41" opacity="0.9" filter="url(#glow2)">BUG BOUNTY</text>
+
+  <text x="55" y="145" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[CTF]</text>
+  <text x="140" y="145" font-family="'Courier New',monospace" font-size="12" fill="#5599ff" opacity="0.9">ACTIVE</text>
+
+  <line x1="55" y1="152" x2="310" y2="152" stroke="#00FF41" stroke-width="0.5" opacity="0.2"/>
+  <text x="55" y="165" font-family="'Courier New',monospace" font-size="9" fill="#00FF41" opacity="0.35" letter-spacing="1">OWASP · CEH · BSCP · OSCP</text>
+
+  <!-- ═══ RIGHT HUD ═══ -->
+  <text x="590" y="40" font-family="'Courier New',monospace" font-size="9" fill="#00FF41" opacity="0.5" letter-spacing="2">■ RECON STATUS</text>
+  <line x1="590" y1="44" x2="845" y2="44" stroke="#00FF41" stroke-width="0.5" opacity="0.2"/>
+
+  <text x="590" y="65" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[TARGET]</text>
+  <text x="690" y="65" font-family="'Courier New',monospace" font-size="12" fill="#ff4444" opacity="0.85">ACQUIRING</text>
+  <rect class="cursor" x="785" y="54" width="7" height="12" fill="#ff4444" opacity="0.7"/>
+
+  <text x="590" y="85" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[PORTS]</text>
+  <text x="690" y="85" font-family="'Courier New',monospace" font-size="12" fill="#00FF41" opacity="0.9">22/80/443</text>
+
+  <text x="590" y="105" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[VULNS]</text>
+  <text x="690" y="105" font-family="'Courier New',monospace" font-size="12" fill="#ffaa00" opacity="0.9">SCANNING...</text>
+
+  <text x="590" y="125" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[SHELL]</text>
+  <text x="690" y="125" font-family="'Courier New',monospace" font-size="12" fill="#00FF41" opacity="0.9">/bin/bash</text>
+
+  <text x="590" y="145" font-family="'Courier New',monospace" font-size="12" fill="#556677" opacity="0.85">[PRIV]</text>
+  <text x="690" y="145" font-family="'Courier New',monospace" font-size="12" fill="#ffaa00" opacity="0.9">ESCALATING...</text>
+
+  <line x1="590" y1="152" x2="845" y2="152" stroke="#00FF41" stroke-width="0.5" opacity="0.2"/>
+  <text x="590" y="165" font-family="'Courier New',monospace" font-size="9" fill="#00FF41" opacity="0.35" letter-spacing="1">TRYHACKME · HACKTHEBOX · BUGCROWD</text>
+
+</svg>
