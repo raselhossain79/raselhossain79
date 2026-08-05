@@ -63,7 +63,7 @@
   Currently  :
     🐛 Active Bug Bounty Hunting (HackerOne / Bugcrowd)
     📁 Building a professional Web/API pentest reference library
-    💻 Grinding HackTheBox & TryHackMe
+    💻 Grinding Portswigger, HackTheBox & TryHackMe
 
   Mindset    : Recon → Understand → Exploit → Report → Remediate
 ```
